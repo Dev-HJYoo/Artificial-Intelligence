@@ -30,10 +30,10 @@ X_train, X_test, y_train, y_test = cross_validation.train_test_split(
         X, y, test_size=0.25, random_state=5)
 
 # Extremely Random Forests classifier
-params = {'n_estimators': 100, 'max_depth': 4, 'random_state': 0}
+params = {'n_estimators': 100, 'max_depth': 4, 'random_state': 0, 'class_weight': 'balanced'} ####################### 여기를 바꾸면서 해보자
 if len(sys.argv) > 1:
     if sys.argv[1] == 'balance':
-        params = {'n_estimators': 100, 'max_depth': 4, 'random_state': 0, 'class_weight': 'balanced'}
+        params = {'n_estimators': 100, 'max_depth': 4, 'random_state': 0, 'class_weight': 'balanced'} # 이렇게 밸런스를 넣으면 정확도가 상승한다.
     else:
         raise TypeError("Invalid input argument; should be 'balance'")
 

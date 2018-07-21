@@ -21,8 +21,8 @@ def build_arg_parser():
 
 if __name__=='__main__':
     # Parse the input arguments
-    args = build_arg_parser().parse_args()
-    classifier_type = args.classifier_type
+    #args = build_arg_parser().parse_args()
+    classifier_type = 'rf'
 
     # Load input data
     input_file = 'data_random_forests.txt'
@@ -49,7 +49,7 @@ if __name__=='__main__':
             X, y, test_size=0.25, random_state=5)
 
     # Ensemble Learning classifier
-    params = {'n_estimators': 100, 'max_depth': 4, 'random_state': 0}
+    params = {'n_estimators': 100, 'max_depth': 4, 'random_state': 0} # 트리 갯수, 최대 깊이, 랜덤 시드
     if classifier_type == 'rf':
         classifier = RandomForestClassifier(**params)
     else:
@@ -74,13 +74,14 @@ if __name__=='__main__':
     print("#"*40 + "\n")
 
     # Compute confidence
-    test_datapoints = np.array([[5, 5], [3, 6], [6, 4], [7, 2], [4, 4], [5, 2]])
+    test_datapoints = np.array([[5, 5], [3, 6], [6, 4], [7, 2], [4, 4], [5, 2], [10,0], [9,3]])
 
     print("\nConfidence measure:")
     for datapoint in test_datapoints:
         probabilities = classifier.predict_proba([datapoint])[0]
         predicted_class = 'Class-' + str(np.argmax(probabilities))
         print('\nDatapoint:', datapoint)
+        print(str(probabilities))
         print('Predicted class:', predicted_class) 
 
     # Visualize the datapoints
