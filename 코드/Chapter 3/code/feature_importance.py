@@ -10,7 +10,7 @@ from sklearn.utils import shuffle
 from utilities import visualize_feature_importances
 
 # Load housing data
-housing_data = datasets.load_boston() 
+housing_data = datasets.load_boston()  # csv파일 형태로 저장된 집값에 대한 내
 
 # Shuffle the data
 X, y = shuffle(housing_data.data, housing_data.target, random_state=7)
@@ -20,7 +20,7 @@ X_train, X_test, y_train, y_test = cross_validation.train_test_split(
         X, y, test_size=0.2, random_state=7)
 
 # AdaBoost Regressor model
-regressor = AdaBoostRegressor(DecisionTreeRegressor(max_depth=4), 
+regressor = AdaBoostRegressor(DecisionTreeRegressor(max_depth=4),  # AdaBoost 사용
         n_estimators=400, random_state=7)
 regressor.fit(X_train, y_train)
 

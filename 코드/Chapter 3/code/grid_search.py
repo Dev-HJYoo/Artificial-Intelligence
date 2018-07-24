@@ -23,11 +23,11 @@ X_train, X_test, y_train, y_test = cross_validation.train_test_split(
         X, y, test_size=0.25, random_state=5)
 
 # Define the parameter grid 
-parameter_grid = [ {'n_estimators': [100], 'max_depth': [2, 4, 7, 12, 16]},
+parameter_grid = [ {'n_estimators': [100], 'max_depth': [2, 4, 7, 12, 16]}, # erf에 들어가는 파라미터 설정
                    {'max_depth': [4], 'n_estimators': [25, 50, 100, 250]}
                  ]
 
-metrics = ['precision_weighted', 'recall_weighted']
+metrics = ['precision_weighted', 'recall_weighted'] # 점수 매기는 법
 
 for metric in metrics:
     print("\n##### Searching optimal parameters for", metric)

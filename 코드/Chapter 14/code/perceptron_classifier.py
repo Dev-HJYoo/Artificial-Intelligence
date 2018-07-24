@@ -26,7 +26,7 @@ num_output = labels.shape[1]
 # have 2 dimensions in the input data)
 dim1 = [dim1_min, dim1_max]
 dim2 = [dim2_min, dim2_max]
-perceptron = nl.net.newp([dim1, dim2], num_output)
+perceptron = nl.net.newp([dim1, dim2], num_output) # 뉴런들끼리 엮
 
 # Train the perceptron using the data
 error_progress = perceptron.train(data, labels, epochs=100, show=20, lr=0.03)

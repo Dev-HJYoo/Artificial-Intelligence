@@ -20,8 +20,9 @@ plt.title('Input data')
 dim1_min, dim1_max = data[:,0].min(), data[:,0].max()
 dim2_min, dim2_max = data[:,1].min(), data[:,1].max()
 
-# Define the number of neurons in the output layer
+# Define the number of neurons in the output layer # 출력의 갯수를 정하는 것
 num_output = labels.shape[1]
+
 
 # Define a single-layer neural network 
 dim1 = [dim1_min, dim1_max]

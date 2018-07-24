@@ -25,13 +25,13 @@ plt.title('Input data')
 # First hidden layer consists of 10 neurons
 # Second hidden layer consists of 6 neurons
 # Output layer consists of 1 neuron
-nn = nl.net.newff([[min_val, max_val]], [10, 6, 1])
+nn = nl.net.newff([[min_val, max_val]], [10, 6, 1])  # 2개의 은닉층이 있는데 첫번째는 10개의 뉴런이 2번째는 6개의 뉴런이 있다. 그리고 출력층에는 뉴런이 1개이다. 제일 첫번째 인수는 입력층이다.
 
 # Set the training algorithm to gradient descent
 nn.trainf = nl.train.train_gd
 
 # Train the neural network
-error_progress = nn.train(data, labels, epochs=2000, show=100, goal=0.01)
+error_progress = nn.train(data, labels, epochs=2000, show=100, goal=0.001) # 2000번 반복하고 100번마다 보여주며 목표는 에러가 0.01인 것이다.
 
 # Run the neural network on training datapoints
 output = nn.sim(data)
