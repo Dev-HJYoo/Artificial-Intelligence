@@ -5,37 +5,37 @@ import neurolab as nl
 # Load input data
 text = np.loadtxt('data_vector_quantization.txt')
 
-# Separate it into data and labels
+# Separate it into data and labels # 첫번째 두번째 요소는 데이터 포인터이다. 세번째부터 나머지는 인코딩 된 것이다.
 data = text[:, 0:2]
 labels = text[:, 2:]
 
 # Define a neural network with 2 layers:
-# 10 neurons in input layer and 4 neurons in output layer
+# 10 neurons in input layer and 4 neurons in output layer # 10개의 입력 뉴런, 4개의 출력 뉴런
 num_input_neurons = 10
 num_output_neurons = 4
 weights = [1/num_output_neurons] * num_output_neurons
 nn = nl.net.newlvq(nl.tool.minmax(data), num_input_neurons, weights)
 
 # Train the neural network
-_ = nn.train(data, labels, epochs=500, goal=-1)
+_ = nn.train(data, labels, epochs=500, goal=-1) # 학습 시키기
 
 # Create the input grid
-xx, yy = np.meshgrid(np.arange(0, 10, 0.2), np.arange(0, 10, 0.2))
+xx, yy = np.meshgrid(np.arange(0, 10, 0.2), np.arange(0, 10, 0.2)) # 입력 격자 모양 만들기
 xx.shape = xx.size, 1
 yy.shape = yy.size, 1
 grid_xy = np.concatenate((xx, yy), axis=1)
 
-# Evaluate the input grid of points
-grid_eval = nn.sim(grid_xy)
-
+# Evaluate the input grid of points # 입력 격자 모양의 포인터 평가하기
+grid_eval = nn.sim(grid_xy) 
+ 
 # Define the 4 classes
-class_1 = data[labels[:,0] == 1]
+class_1 = data[labels[:,0] == 1] # 4개의 클래스 설정하기
 class_2 = data[labels[:,1] == 1]
 class_3 = data[labels[:,2] == 1]
 class_4 = data[labels[:,3] == 1]
 
 # Define X-Y grids for all the 4 classes
-grid_1 = grid_xy[grid_eval[:,0] == 1]
+grid_1 = grid_xy[grid_eval[:,0] == 1] # 격자 모양으로 된 곳에 할당 하
 grid_2 = grid_xy[grid_eval[:,1] == 1]
 grid_3 = grid_xy[grid_eval[:,2] == 1]
 grid_4 = grid_xy[grid_eval[:,3] == 1]
