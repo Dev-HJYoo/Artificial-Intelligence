@@ -2,7 +2,7 @@ import argparse
 
 import gym
 
-def build_arg_parser():
+def build_arg_parser(): # 입력 변수를 해석하는 함수
     parser = argparse.ArgumentParser(description='Run an environment')
     parser.add_argument('--input-env', dest='input_env', required=True,
             choices=['cartpole', 'mountaincar', 'pendulum', 'taxi', 'lake'], 
@@ -23,11 +23,11 @@ if __name__=='__main__':
     env = gym.make(name_map[input_env])
     env.reset()
 
-    # Iterate 1000 times
+    # Iterate 1000 times #1000번 반복해보기
     for _ in range(1000):
         # Render the environment
         env.render()
 
         # take a random action
         env.step(env.action_space.sample()) 
-
+        
