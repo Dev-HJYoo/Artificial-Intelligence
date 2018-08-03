@@ -8,7 +8,7 @@ random_episodes = 0
 reward_sum = 0
 i = 0
 a = [1,2]
-while random_episodes < 10:
+while random_episodes < 1:
 
     env.render()
     action = a[i]
@@ -21,8 +21,7 @@ while random_episodes < 10:
     if i == 2:
         i = 0
     print(reward_sum)
-    if reward_sum < -1500:
+    if  done:
         random_episodes +=1
         print("Reward for this episode was:", reward_sum)
         reward_sum = 0
-        env.reset()
