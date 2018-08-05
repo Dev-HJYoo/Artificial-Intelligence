@@ -60,6 +60,7 @@ with tf.Session() as sess: # 학습
         while not done:
 
             Qs = sess.run(Qpred, feed_dict={X: one_hot(s)})
+            
 
             #랜덤하게 state 결정
             if np.random.rand(1) < e:
