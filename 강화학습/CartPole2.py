@@ -54,6 +54,8 @@ for i in range(num_episodes):
     s = env.reset()
     done = False
 
+    print(s)
+
     while not done:
         step_count += 1
         # 현재 상태

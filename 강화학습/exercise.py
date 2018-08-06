@@ -1,27 +1,98 @@
 import gym
+import numpy as np
+import tensorflow as tf
 
 env = gym.make('MountainCar-v0')
-env.reset()
 
-random_episodes = 0
 
-reward_sum = 0
-i = 0
-a = [1,2]
-while random_episodes < 1:
+learning_rate = 1e-1
 
-    env.render()
-    action = a[i]
+input_size = env.observation_space.shape[0]
+output_size = env.action_space.n
+
+X = tf.placeholder(tf.float32, [None, input_size], name="input_x")
+
+W1 = tf.get_variable("W1", shape=[input_size, output_size],
+                     initializer=tf.contrib.layers.xavier_initializer())
+
+Qpred = tf.matmul(X,W1)
+
+Y = tf.placeholder(shape=[None, output_size], dtype=tf.float32)
+
+loss = tf.reduce_sum(tf.square(Y-Qpred))
+
+
+train = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
+
+
+num_episodes = 500
+dis = 0.9
+rList = []
+
+init = tf.global_variables_initializer()
+sess = tf.Session()
+sess.run(init)
+
+for i in range(num_episodes):
+
+    e = 1./((i/10)+1)
+    rAll = 0
+
+    step_count = 0
+
+    s = env.reset()
     
-    observation, reward, done, _ = env.step(action)
-    print(observation, reward, done)
+    done =False
 
+    while not done:
+        step_count +=1
+
+        x = np.reshape(s, [1, input_size])
+
+        Qs = sess.run(Qpred, feed_dict={X: x})
+        if np.random.rand(1) <e:
+            a = env.action_space.sample()
+        else:
+            a = np.argmax(Qs)
+
+
+        s1, reward, done, _ = env.step(a)
+
+        if done:
+            Qs[0, a] = -100
+        else:
+
+            x1 = np.reshape(s1, [1, input_size])
+            Qs1 = sess.run(Qpred, feed_dict={X: x1})
+            Qs[0, a] = reward + dis * np.max(Qs1)
+
+
+        sess.run(train, feed_dict={X: x, Y: Qs})
+        s = s1
+
+    rList.append(step_count)
+    print("Episode : {} steps : {}".format(i, step_count))
+
+    if len(rList) >10 and np.mean(rList[-5:]) < 180:
+        break;
+
+observation = env.reset()
+reward_sum = 0
+
+while True:
+    env.render()
+
+    #현재 상태 입력
+    x = np.reshape(observation, [1, input_size])
+    
+    # 다음 행동 예측
+    Qs = sess.run(Qpred, feed_dict = {X: x})
+    
+    # 다음행동 대입
+    a = np.argmax(Qs)
+    
+    observation, reward, done, _ = env.step(a)
     reward_sum += reward
-    i += 1
-    if i == 2:
-        i = 0
-    print(reward_sum)
-    if  done:
-        random_episodes +=1
-        print("Reward for this episode was:", reward_sum)
-        reward_sum = 0
+    if done:
+          print("Total score: {}".format(reward_sum))
+          break
