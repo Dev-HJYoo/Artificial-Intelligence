@@ -29,7 +29,7 @@ if __name__=='__main__':
     cap = cv2.VideoCapture(0)
 
     # Define the scaling factor for the images # 이미지 크기
-    scaling_factor = 1.0
+    scaling_factor = 0.5
     
     # Grab the current frame # 전 프레임
     prev_frame = get_frame(cap, scaling_factor) 
