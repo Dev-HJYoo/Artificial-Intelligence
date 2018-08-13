@@ -1,12 +1,9 @@
 import argparse 
-
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report
 from sklearn import cross_validation
 from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
-from sklearn import cross_validation
-from sklearn.metrics import classification_report
 
 from utilities import visualize_classifier
 
@@ -29,11 +26,12 @@ if __name__=='__main__':
     data = np.loadtxt(input_file, delimiter=',')
     X, y = data[:, :-1], data[:, -1]
 
+
     # Separate input data into three classes based on labels
     class_0 = np.array(X[y==0])
     class_1 = np.array(X[y==1])
     class_2 = np.array(X[y==2])
-
+    
     # Visualize input data
     plt.figure()
     plt.scatter(class_0[:, 0], class_0[:, 1], s=75, facecolors='white', 

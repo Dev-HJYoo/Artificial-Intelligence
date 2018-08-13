@@ -1,50 +1,50 @@
 import cv2
 import numpy as np
 
-# Load the Haar cascade files for face and eye
+# Load the Haar cascade files for face and eye # Haar cascade 파일에서 얼굴과 눈 가지고 오기
 face_cascade = cv2.CascadeClassifier('haar_cascade_files/haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haar_cascade_files/haarcascade_eye.xml')
 
 # Check if the face cascade file has been loaded correctly
-if face_cascade.empty():
+if face_cascade.empty(): # 파일 확인
 	raise IOError('Unable to load the face cascade classifier xml file')
 
 # Check if the eye cascade file has been loaded correctly
-if eye_cascade.empty():
+if eye_cascade.empty(): # 파일 확인
 	raise IOError('Unable to load the eye cascade classifier xml file')
 
 # Initialize the video capture object
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0) # 웹캠 실행
 
 # Define the scaling factor
-ds_factor = 0.5
+ds_factor = 0.5 # 크기 
 
 # Iterate until the user hits the 'Esc' key
 while True:
     # Capture the current frame
-    _, frame = cap.read()
+    _, frame = cap.read() # 현재 프레임 가져오기
 
-    # Resize the frame
+    # Resize the frame # 크기 재설정
     frame = cv2.resize(frame, None, fx=ds_factor, fy=ds_factor, interpolation=cv2.INTER_AREA)
 
-    # Convert to grayscale
+    # Convert to grayscale # 회색으로 바꾸기
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    # Run the face detector on the grayscale image
+    # Run the face detector on the grayscale image # 얼굴 탐색
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
     # For each face that's detected, run the eye detector
-    for (x,y,w,h) in faces:
+    for (x,y,w,h) in faces: # 얼굴에서 눈 탐색
         # Extract the grayscale face ROI
-        roi_gray = gray[y:y+h, x:x+w]
+        roi_gray = gray[y:y+h, x:x+w] # 회색 프레임에서 얼굴 추출
 
-        # Extract the color face ROI
+        # Extract the color face ROI # 컬러 프레임에서 얼굴 추출
         roi_color = frame[y:y+h, x:x+w]
 
-        # Run the eye detector on the grayscale ROI
+        # Run the eye detector on the grayscale ROI # 회색 프레임에서 눈 추출
         eyes = eye_cascade.detectMultiScale(roi_gray)
 
-        # Draw circles around the eyes
+        # Draw circles around the eyes # 원으로 눈 표시 하
         for (x_eye,y_eye,w_eye,h_eye) in eyes:
             center = (int(x_eye + 0.5*w_eye), int(y_eye + 0.5*h_eye))
             radius = int(0.3 * (w_eye + h_eye))
