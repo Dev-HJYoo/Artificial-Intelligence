@@ -42,7 +42,6 @@ if __name__ == '__main__':
     for test in X_test: # 예측 값을 저장
         check = ""
         probabilities = classifier.predict_proba([test])[0]
-        print(probabilities)
         max_pro = max(probabilities)
         predict = list(probabilities).index(max_pro)
         if predict == y_test[i]: # 예측값과 실제 값과 맞는지 체크
