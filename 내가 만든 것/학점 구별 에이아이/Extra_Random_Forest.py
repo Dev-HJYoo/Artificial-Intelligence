@@ -2,9 +2,13 @@ import numpy as np
 from sklearn import preprocessing
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn import cross_validation
-import matplotlib.pyplot as plt
-from sklearn.metrics import classification_report
-from utilities import visualize_classifier
+
+## 90점 이상은 A
+## 80점 이상은 B
+## 70점 이상은 C
+## 60점 이상은 D
+## 나머지는 F로 정함.
+
 
 if __name__ == '__main__':
 

@@ -53,6 +53,8 @@ if __name__=='__main__':
     else:
         classifier = ExtraTreesClassifier(**params)
 
+    print(X_train)
+
     classifier.fit(X_train, y_train)
     visualize_classifier(classifier, X_train, y_train, 'Training dataset')
 
